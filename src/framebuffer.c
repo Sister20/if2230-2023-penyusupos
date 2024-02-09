@@ -22,4 +22,10 @@ void framebuffer_write(uint8_t row, uint8_t col, char c, uint8_t fg, uint8_t bg)
 }
 void framebuffer_clear(void) {
     // TODO : Implement
+
+    for (int i = 0; i < 25; i++) {
+        for (int j = 0; j < 80; j++) {
+            framebuffer_write(i, j, 0x00, 0x7, 0);
+        }
+    }
 }
