@@ -11,3 +11,26 @@ Kit list
 Disusun oleh tim asisten laboratorium sistem terdistribusi '20
 
 Disclaimer : Seluruh material yang digunakan pada spesifikasi dan kit digunakan untuk kepentingan edukasional dan memenuhi mata kuliah IF2230 - Sistem Operasi tahun 2023
+
+command list
+
+`gcc -ffreestanding -fshort-wchar -g -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -m32 -c -Isrc src/kernel.c -o bin/kernel.o`
+
+`nasm -f elf32 -g -F dwarf src/kernel_loader.s -o bin/kernel_loader.o`
+
+`ld -T src/linker.ld -melf_i386 bin/kernel.o bin/kernel_loader.o -o bin/kernel`
+
+```
+genisoimage -R	\
+	-b boot/grub/grub1	\
+	-no-emul-boot		\
+	-boot-load-size 4	\
+	-A os			\
+	-input-charset utf8	\
+	-quiet			\
+	-boot-info-table	\
+	-o OS2023.iso		\
+	iso
+```
+
+`qemu-system-i386 -s -cdrom OS2023.iso`
